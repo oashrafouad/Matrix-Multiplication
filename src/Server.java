@@ -5,29 +5,32 @@ import java.util.Arrays;
 
 public class Server {
     public static void main(String[] args) {
-        try
-        {
-            while (true)
-            {
+        try {
+            while (true) {
                 ServerSocket serverSocket = new ServerSocket(1234);
-                System.out.println("Listening");
 
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected");
+                System.out.println("Listening for client 1");
+                Socket clientSocket1 = serverSocket.accept();
+                System.out.println("Client 1 connected");
 
-                ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-                int[][] firstMatrix = (int[][]) objectInputStream.readObject();
-                int[][] secondMatrix = (int[][]) objectInputStream.readObject();
+                ObjectInputStream objectInputStream1 = new ObjectInputStream(clientSocket1.getInputStream());
+                int[][] matrix1 = (int[][]) objectInputStream1.readObject();
 
-                System.out.println(Arrays.deepToString(firstMatrix).replace("], ", "],\n"));
-                System.out.println(Arrays.deepToString(secondMatrix).replace("], ", "],\n"));
+                System.out.println("Listening for client 2");
+                Socket clientSocket2 = serverSocket.accept();
+                System.out.println("Client 2 connected");
 
-                clientSocket.close();
+                ObjectInputStream objectInputStream2 = new ObjectInputStream(clientSocket2.getInputStream());
+                int[][] matrix2 = (int[][]) objectInputStream2.readObject();
+
+                System.out.println(Arrays.deepToString(matrix1).replace("], ", "],\n"));
+                System.out.println(Arrays.deepToString(matrix2).replace("], ", "],\n"));
+
+                clientSocket1.close();
+                clientSocket2.close();
                 serverSocket.close();
             }
-        }
-        catch (Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
     }

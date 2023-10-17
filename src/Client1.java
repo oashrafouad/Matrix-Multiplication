@@ -1,9 +1,7 @@
-import java.io.DataOutputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Arrays;
 
-public class Client {
+public class Client1 {
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("localhost", 1234);
@@ -16,14 +14,7 @@ public class Client {
                     {0, 3, 5}
             };
 
-            int[][] matrix2 = new int[][]{
-                    {0, 1, 2},
-                    {2, 3, 4},
-                    {0, 3, 6}
-            };
-
             dataOutputStream.writeObject(matrix1);
-            dataOutputStream.writeObject(matrix2);
             dataOutputStream.flush();
             socket.close();
 
