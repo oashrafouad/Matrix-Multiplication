@@ -4,7 +4,7 @@ import java.net.Socket;
 public class Client1 {
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket("localhost", 1234);
+            Socket socket = new Socket("localhost", 1224);
             System.out.println("Connected");
             ObjectOutputStream dataOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
@@ -26,3 +26,4 @@ public class Client1 {
         }
     }
 }
+
