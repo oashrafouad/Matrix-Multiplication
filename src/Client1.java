@@ -11,7 +11,6 @@ public class Client1 {
             int[][] matrix1 = new int[][]{
                     {0, 1, 2},
                     {2, 3, 4},
-                    {0, 3, 5}
             };
 
             dataOutputStream.writeObject(matrix1);
