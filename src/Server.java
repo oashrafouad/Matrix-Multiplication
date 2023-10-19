@@ -1,71 +1,60 @@
-import java.io.ObjectInputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.ServerSocket;
 import java.util.Arrays;
+import java.io.ObjectInputStream;
 
 public class Server {
     public static void main(String[] args) {
-        int numberOfClients = 2;
+        try {
+            while (true) {
+                ServerSocket serverSocket = new ServerSocket(1233);
 
-        int[][] result = new int[0][0];
+                System.out.println("Listening for client 1");
+                Socket clientSocket1 = serverSocket.accept();
+                System.out.println("Client 1 connected");
 
-        for (int counter = 0; counter < numberOfClients; counter++) {
-            ServerSocket serverSocket = null;
-            try {
-                serverSocket = new ServerSocket(1224);
+                ObjectInputStream objectInputStream1 = new ObjectInputStream(clientSocket1.getInputStream());
+                int[][] matrix1 = (int[][]) objectInputStream1.readObject();
+                System.out.println("First matrix:");
+                System.out.println(Arrays.deepToString(matrix1).replace("], ", "],\n"));
 
-                System.out.println("Listening for client");
-                Socket clientSocket = serverSocket.accept();
-                System.out.println(counter);
-                System.out.println("Client connected");
+                System.out.println("Listening for client 2");
+                Socket clientSocket2 = serverSocket.accept();
+                System.out.println("Client 2 connected");
 
-                ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-                int[][] matrix = (int[][]) objectInputStream.readObject();
+                ObjectInputStream objectInputStream2 = new ObjectInputStream(clientSocket2.getInputStream());
+                int[][] matrix2 = (int[][]) objectInputStream2.readObject();
+                System.out.println("Second matrix:");
+                System.out.println(Arrays.deepToString(matrix2).replace("], ", "],\n"));
 
-//                System.out.println(Arrays.deepToString(matrix).replace("], ", "],\n"));
+                int rowsMatrix1 = matrix1.length;
+                int colsMatrix1 = matrix1[0].length;
+                int rowsMatrix2 = matrix2.length;
+                int colsMatrix2 = matrix2[0].length;
 
-                if (counter == 0) {
-                    result = matrix;
-                    System.out.println("Counter == 0 executed");
-
-                } else {
-                    System.out.println("Operation executed");
-                    // result = result * matrix;
-                    int rowsR = result.length;
-                    int colsR = result[0].length;
-                    int colsM = matrix[0].length;
-                    //initializing the matrix multiplication data
-                    int[][] finalResult = new int[rowsR][colsM];
-                    //initializing the final result with the size of the resulted matrix from multiplication
-                    //performing the needed for loops
-                    for (int i = 0; i < rowsR; i++) {
-                        for (int j = 0; j < colsM; j++) {
-                            for (int k = 0; k < colsR; k++) {
-                                finalResult[i][j] += result[i][k] * matrix[k][j];
+                if (colsMatrix1 == rowsMatrix2) {
+                    // Initializing the final result with the size of the resulted matrix from multiplication
+                    int[][] result = new int[rowsMatrix1][colsMatrix2];
+                    // Performing the needed for loops
+                    for (int i = 0; i < rowsMatrix1; i++) {
+                        for (int j = 0; j < colsMatrix2; j++) {
+                            for (int k = 0; k < colsMatrix1; k++) {
+                                result[i][j] += matrix1[i][k] * matrix2[k][j];
                             }
                         }
                     }
-                    int[][] x = null;
-
-                    System.out.println(Arrays.deepToString(finalResult).replace("], ", "],\n"));
-
+                    System.out.println("Multiplication result:");
+                    System.out.println(Arrays.deepToString(result).replace("], ", "],\n"));
+                } else {
+                    System.out.println("These two matrices can't be multiplied");
                 }
 
-
-                clientSocket.close();
+                clientSocket1.close();
+                clientSocket2.close();
                 serverSocket.close();
-
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
             }
-
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
-
-
-//        while (true) {
-//
-//        }
-
-
     }
 }
