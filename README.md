@@ -1,5 +1,5 @@
 # Matrix-Multiplication
-This is a Java app we made as an assignment part of the Big Data course I took in university. It uses Socket connection to input two matrices from two clients into a server and multiplies them. You can run the Server and Clients locally on the same device or run them on different devices in the same network.
+This is a Java program we made as an assignment part of the Big Data course I took in university. It uses Socket connection to input two matrices from two clients into a server and multiplies them. You can run the Server and Clients locally on the same device or run them on different devices in the same network.
 # How to Run
 * If you are running Server and Clients on different devices you need to obtain the IP address of the Server device. Open the terminal on the Server device and execute:
 
